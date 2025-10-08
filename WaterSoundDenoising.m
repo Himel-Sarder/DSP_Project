@@ -2,23 +2,23 @@ clc;
 clear all;
 close all;
 
-%% Download Audio -------------------------------------------------------------------
+%% Download Audio ---------------------------------------------- 
 disp('Downloading your voice file...');
 url = 'https://raw.githubusercontent.com/Himel-Sarder/DSP_Project/main/NoisyVoice.wav';
 filename = 'NoisyVoice.wav';
 websave(filename, url);
 disp('Download complete!');
 
-%% Read Audio -----------------------------------------------------------------------
+%% Read Audio --------------------------------------------------- 
 [y, Fs] = audioread(filename);
 t = (0:length(y)-1)/Fs;
 
-%% Play Original Audio --------------------------------------------------------------
+%% Play Original Audio ------------------------------------------ 
 disp("Playing Original Voice...");
 sound(y, Fs);
 pause(length(y)/Fs + 1);
 
-%% Plot Original Waveform -----------------------------------------------------------
+%% Plot Original Waveform --------------------------------------- 
 figure;
 plot(t, y, 'r');
 xlabel('Time (s)');
@@ -99,6 +99,7 @@ title('Denoised Audio'); xlabel('Time (s)'); ylabel('Amplitude');
 xlim([0 max(t)]);
 
 sgtitle('Audio Filtering and Noise Reduction');
+
 
 
 
