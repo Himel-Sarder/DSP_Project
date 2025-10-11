@@ -1,8 +1,13 @@
 %% ===============================================================================================
-
-% Lab by - Himel Sarder
+% Department of Computer Science and Engineering (CSE)
+% Jamalpur Science & Technology University, Jamalpur
+% 3rd Year 1st Semester Lab Project
+% Course Code: CSE-3142, Session:2021-2022
+% Course Title: Digital Signal Processing Lab
+% Submitted By - Himel Sarder
 % ID : 22111121
 
+% NB: 
 
 %% ==============================================================================================
 clc;                    % Clear command window
@@ -252,5 +257,6 @@ title('Advanced Audio (Shifted Left)');
 xlabel('Time (s)');
 ylabel('Amplitude');
 grid on;
+
 
 sgtitle('Time Shifting of Original Audio (Delay and Advance)');
