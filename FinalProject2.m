@@ -7,7 +7,9 @@
 % Submitted By - Himel Sarder
 % ID : 22111121
 
-% NB: 
+% NB: After running the code, If showing any error: Install -> Signal Processing Toolbox  !
+% How to install:
+% Home Tab => Add-Ons => Search (Signal Processing Toolbox) => Select first one => Install (May required gmail and password)
 
 %% ==============================================================================================
 clc;                    % Clear command window
@@ -15,7 +17,7 @@ clear all;              % Remove all variables from workspace
 close all;              % Close all open figure windows
 
 %% =============================== DOWNLOAD AUDIO ===============================================
-disp('Downloading your voice file...');      % Display message to indicate download start
+disp('Downloading Himel's voice file...');      % Display message to indicate download start
 url = 'https://raw.githubusercontent.com/Himel-Sarder/DSP_Project/main/WindNoise.wav'; % Audio file URL
 filename = 'WindNoise.wav';                  % Local filename to save the audio
 websave(filename, url);                      % Download the file from URL
@@ -102,6 +104,12 @@ disp('Playing Denoised Audio...');
 sound(y_temp, Fs);
 pause(length(y)/Fs + 1);
 
+% A high-pass filter allows high frequencies to pass and blocks low frequencies.
+% If you set the cutoff at 1200 Hz:
+% Frequencies >1200 Hz pass → My voice is mostly preserved.
+% Frequencies <1200 Hz are attenuated → most wind noise is removed.
+
+% This works because wind noise is concentrated at low frequencies, so a high-pass filter naturally removes that rumble without affecting my voice much.
 %% =============================== PLOTTING ALL RESULTS =========================================
 figure('Name', 'Audio Filtering and Denoising', 'NumberTitle', 'off');
 
@@ -143,7 +151,7 @@ grid on;
 
 sgtitle('Audio Filtering and Noise Reduction'); % Super title for all subplots
 
-%% =============================== STUDENT EVALUATION ===========================================
+%% =============================== MY EVALUATION ===========================================
 % Listening Test:
 % - Original audio has low-frequency noise (wind sound)
 % - High-pass filter removed most low-frequency noise
@@ -152,13 +160,27 @@ sgtitle('Audio Filtering and Noise Reduction'); % Super title for all subplots
 % Waveform Observation:
 % - Denoised waveform is smoother with less random spikes
 % - High-pass removes low-frequency components
-% - Wiener filter smooths small fluctuations effectively
 
 % Overall Effectiveness:
-% - High-pass + Wiener filter works well for this audio
 % - Voice becomes clearer, noise significantly reduced
 
 %% =============================== SNR CALCULATION ==============================================
+% SNR stands for Signal-to-Noise Ratio.
+% It quantifies how much of your desired signal (e.g., voice) is present compared to the unwanted noise.
+
+% SNR = Power of Signal / Power of Noise
+
+% Often expressed in decibels (dB):
+% SNR (dB) = 10 * log10(P_signal / P_noise)
+% Where:
+% P_signal = Average power of the signal
+% P_noise  = Average power of the noise
+
+% High SNR → Signal is much stronger than noise → clear audio.
+% Low SNR → Noise is strong compared to signal → audio is noisy.
+
+
+
 noise_before = y - y_high;                      % Estimate noise before denoising
 noise_after  = y - y_temp;                  % Estimate noise after denoising
 
@@ -186,6 +208,20 @@ spectrogram(y_temp, window, noverlap, nfft, Fs, 'yaxis');
 title('Denoised Audio Spectrogram');
 ylim([0 5]);
 colorbar;
+
+
+% Observations:
+%--------------
+% Original Autio Spectrogram ==>
+% There’s a yellow band near 0–1 kHz, which is persistent across time. This is likely wind noise, because wind primarily occupies low frequencies.
+% The voice signal is visible in mid frequencies (~0.3–3 kHz), but it is mixed with the low-frequency noise.
+% Higher frequencies (>3 kHz) have less energy, mostly background noise.
+
+% Denoised Audio Spectrogram ==>
+% The low-frequency yellow band (0–1 kHz) has been reduced. They are now blue, indicating low energy, meaning the wind noise has been removed.
+% Voice components in mid-frequency range (~0.3–3 kHz) are clearly preserved.
+
+Overall, the denoised spectrogram is cleaner, with less interference in the low-frequency range.
 
 %% =============================== FFT FREQUENCY SPECTRUM =======================================
 disp('Computing FFT for frequency spectrum...');
@@ -260,3 +296,4 @@ grid on;
 
 
 sgtitle('Time Shifting of Original Audio (Delay and Advance)');
+
