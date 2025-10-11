@@ -92,7 +92,7 @@ pause(length(y)/Fs + 1);
 
 %% =============================== HIGH-PASS FILTER FOR DENOISING ===============================
 disp('Applying High-pass Filter for Denoising...');
-Fc_denoise = 1200;
+Fc_denoise = 800;
 order_denoise = 6;
 
 denoiseFilt = designfilt('highpassiir', 'FilterOrder', order_denoise, ...
@@ -105,9 +105,9 @@ sound(y_temp, Fs);
 pause(length(y)/Fs + 1);
 
 % A high-pass filter allows high frequencies to pass and blocks low frequencies.
-% If you set the cutoff at 1200 Hz:
-% Frequencies >1200 Hz pass → My voice is mostly preserved.
-% Frequencies <1200 Hz are attenuated → most wind noise is removed.
+% If you set the cutoff at 800 Hz:
+% Frequencies >800 Hz pass → My voice is mostly preserved.
+% Frequencies <800 Hz are attenuated → most wind noise is removed.
 
 % This works because wind noise is concentrated at low frequencies, so a high-pass filter naturally removes that rumble without affecting my voice much.
 %% =============================== PLOTTING ALL RESULTS =========================================
@@ -221,7 +221,7 @@ colorbar;
 % The low-frequency yellow band (0–1 kHz) has been reduced. They are now blue, indicating low energy, meaning the wind noise has been removed.
 % Voice components in mid-frequency range (~0.3–3 kHz) are clearly preserved.
 
-Overall, the denoised spectrogram is cleaner, with less interference in the low-frequency range.
+% Overall, the denoised spectrogram is cleaner, with less interference in the low-frequency range.
 
 %% =============================== FFT FREQUENCY SPECTRUM =======================================
 disp('Computing FFT for frequency spectrum...');
@@ -296,6 +296,7 @@ grid on;
 
 
 sgtitle('Time Shifting of Original Audio (Delay and Advance)');
+
 
 
 
